@@ -5,16 +5,18 @@ api.py
 """
 
 from flask import Flask
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 import quandl
 
 api = Flask(__name__)
+api.config['CORS_HEADERS'] = 'Content-Type'
 
 cors = CORS(api, resources={r"/*": {"origins": "*"}})
 
 
 @api.route('/')
+@cross_origin()
 def fetchData():
     quandl.ApiConfig.api_key = 'xQsG9W4sz9HzLpryaY5E'
     df = quandl.get('EOD/HD', start_date='2015-12-28', end_date='2017-12-28')
